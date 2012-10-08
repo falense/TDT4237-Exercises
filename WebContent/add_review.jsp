@@ -14,7 +14,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta http-equiv="refresh" content="5;url=index.jsp"> 
         <link rel="stylesheet" type="text/css" href="lutstyle.css">
-        <title>Review added NOW!</title>
+        <title>Review added NOW2!</title>
     </head>
     <body>
         <h1>Thanks ${param.name}!</h1>
