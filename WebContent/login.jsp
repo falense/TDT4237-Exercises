@@ -5,11 +5,7 @@
 
 <% 
 String username;
-if (request.getParameter("username").length() > 20)
-{
-	username = request.getParameter("username").substring(0, 20).replace('<', ' ').replace('>', ' ');
-}
-else
+if 
 {
 	username = request.getParameter("username").replace('<', ' ').replace('>', ' ');
 }
@@ -63,7 +59,7 @@ for (int i = 0; i < digest.length; i++) {
             </c:when>
             <c:otherwise>
                 <h1>Login succeeded</h1> 
-                Welcome ${ userDetails.uname}.<br> 
+                Welcome <%=username%>.<br> 
                 Unfortunately, there is no admin functionality here. <br>
                 You need to figure out how to tamper with the application some other way.
             </c:otherwise>
