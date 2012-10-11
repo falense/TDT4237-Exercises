@@ -4,12 +4,10 @@
 <%@page import="java.security.MessageDigest"%>
 
 <% 
-String username;
-if 
-{
-	username = request.getParameter("username").replace('<', ' ').replace('>', ' ');
+String username = request.getParameter("username");
+if(username != null){
+	username = username.replace('<', ' ').replace('>', ' ');	
 }
-
 %>
 
 <% 
