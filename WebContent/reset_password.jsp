@@ -67,7 +67,7 @@ else
         		<sql:param value='${param.email}' />
     		</sql:update>
 		</sql:transaction>
-    </c:when>
+	</c:when>
 	<c:otherwise>
 
 	</c:otherwise>
