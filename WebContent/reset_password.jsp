@@ -59,10 +59,7 @@ else
 
 %>
 <c:choose>
-	<c:when test="${ empty password }">
-
-    </c:when>
-	<c:otherwise>
+	<c:when test="${ not empty password }">
 		<sql:transaction dataSource="jdbc/lut2">
     		<sql:update var="count">
         		UPDATE normal_users SET pw=? WHERE email=?
@@ -70,6 +67,9 @@ else
         		<sql:param value='${param.email}' />
     		</sql:update>
 		</sql:transaction>
+    </c:when>
+	<c:otherwise>
+
 	</c:otherwise>
 </c:choose>
 </body>
