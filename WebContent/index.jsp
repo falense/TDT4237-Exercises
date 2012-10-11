@@ -5,6 +5,35 @@
     SELECT full_name FROM Country
 </sql:query>
 
+<<script type="text/javascript">
+<!--
+var countryNames = new Array();
+
+<c:forEach var="row" items="${country.rowsByIndex}">
+	<c:forEach var="column" items="${row}">
+    	countryNames.push(value="${column}");
+	</c:forEach>
+</c:forEach>
+
+function validate_form ( )
+{
+	valid = false;
+	for(var i=0; i< countryNames.length; i++){
+		if ( countryNames[i] == document.form_country.country.value )
+		{
+	        valid = true;
+	        return valid;
+	    }
+	}
+	if(valid = false){
+		alert( "Please stop tampering with the web parameters." );
+	}
+	
+    return valid;
+}
+
+//-->
+</script>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -27,9 +56,10 @@
                     <td>To view information about schools in a country, please select a country below:</td>
                 </tr>
                 <tr>
-                    <td><form action="schools.jsp">
+                    <td><form name="form_country" action="schools.jsp"
+                    	onSubmit="return validate_form()">
                             <strong>Select a country:</strong>
-                            <select name="country">
+                            <select name= <c:out value="country"/>>
                                 <c:forEach var="row" items="${country.rowsByIndex}">
                                     <c:forEach var="column" items="${row}">
                                         <option value="<c:out value="${column}"/>"><c:out value="${column}"/></option>
