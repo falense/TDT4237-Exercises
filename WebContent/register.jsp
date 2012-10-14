@@ -5,18 +5,6 @@
 <%
 //session.setAttribute("theName",name);
 %>
-Username: "<c:out value="${param.username}"/>"
-<br/>Password: "<c:out value="${param.password}"/>"
-<br/>Email: "<c:out value="${param.email}"/>"
-<br/>Token: "<c:out value="${param.token}"/>"
-<br/>
-	
-	
-Username: "<c:out value="${username}"/>"
-<br/>Password: "<c:out value="${password}"/>"
-<br/>Email: "<c:out value="${email}"/>"
-<br/>Token: "<c:out value="${token}"/>"
-<br/>	
 
 <%!
 public String sendVerificationMail (String to, String token)
@@ -45,7 +33,7 @@ public String sendVerificationMail (String to, String token)
 
 <c:choose>
 
-	<c:when test="${ ! empty token}">
+	<c:when test="${ ! empty param.token}">
 		<c:choose>
 			<c:when test="${token eq param.token}">
 				<center>
@@ -123,7 +111,7 @@ public String sendVerificationMail (String to, String token)
 			</h2>
 			<form method="post" action="register.jsp">
 				<table>
-					<tr><th colspan="2"><h2>Complete signup</h2></th></tr>
+					<tr><th colspan="2"><h3>Complete signup</h3></th></tr>
 					<tr>
 					<td>Verification code:</td>
 					<td><input type="text" name="token"/></td>
@@ -136,3 +124,15 @@ public String sendVerificationMail (String to, String token)
 		
 	</c:otherwise>
 </c:choose>
+Username: "<c:out value="${param.username}"/>"
+<br/>Password: "<c:out value="${param.password}"/>"
+<br/>Email: "<c:out value="${param.email}"/>"
+<br/>Token: "<c:out value="${param.token}"/>"
+<br/>
+	
+	
+Username: "<c:out value="${username}"/>"
+<br/>Password: "<c:out value="${password}"/>"
+<br/>Email: "<c:out value="${email}"/>"
+<br/>Token: "<c:out value="${token}"/>"
+<br/>	
