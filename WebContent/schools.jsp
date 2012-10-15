@@ -3,9 +3,9 @@
 
 
 <sql:query var="school" dataSource="jdbc/lut2">
-    SELECT * FROM Country, School
-    WHERE School.country = Country.short_name
-    AND Country.full_name = ? <sql:param value="${param.country}"/>
+    SELECT * FROM country, school
+    WHERE school.country = country.short_name
+    AND country.full_name = ? <sql:param value="${param.country}"/>
 </sql:query>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
