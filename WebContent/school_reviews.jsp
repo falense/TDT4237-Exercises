@@ -39,7 +39,7 @@
         <table border="0">
             <thead>
                 <tr>
-                    <th colspan="2">Help improving LUT2.0 by adding a review of <c:out value="${param.school_shortname}"/></th>
+                    <th colspan="2">Help improving LUT3.0 by adding a review of <c:out value="${param.school_shortname}"/></th>
                 </tr>
             </thead>
             <tbody>
