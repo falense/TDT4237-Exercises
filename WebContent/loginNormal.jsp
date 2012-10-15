@@ -49,6 +49,7 @@ String encryption = request.getParameter("password");
 		<c:otherwise>
 			<h1>Login succeeded</h1> 
                 Welcome <%=username%>.<br>
+                <% session.setAttribute("SessionName", username); %>
 		</c:otherwise>
 	</c:choose>
 </body>
