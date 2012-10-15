@@ -13,22 +13,22 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" type="text/css" href="lutstyle.css">
-        <title>Reviews for ${param.school_fullname}</title>
+        <title>Reviews for <c:out value="${param.school_fullname}"/></title>
     </head>
     <body>
-        <h1>Reviews for ${param.school_shortname}</h1>
+        <h1>Reviews for <c:out value="${param.school_shortname}"/></h1>
 
         <!-- looping through all available reviews - if there are any -->
         <c:set var="review" value="${reviews.rows[0]}"/>
         <c:choose>
             <c:when test="${ empty review }">
-                No reviews for ${param.school_fullname} yet. Help us out by adding one! 
+                No reviews for <c:out value="${param.school_fullname}"/> yet. Help us out by adding one! 
                 <br><br>
             </c:when>
             <c:otherwise>
                 <c:forEach var="review" items="${reviews.rowsByIndex}">
                     <c:out value="${review[2]}" /><br>
-                    <i>${review[1]}</i>
+                    <i><c:out value="${review[1]}"/></i>
                     <br><br>
                 </c:forEach>
             </c:otherwise>
@@ -39,7 +39,7 @@
         <table border="0">
             <thead>
                 <tr>
-                    <th colspan="2">Help improving LUT2.0 by adding a review of ${param.school_shortname}</th>
+                    <th colspan="2">Help improving LUT2.0 by adding a review of <c:out value="${param.school_shortname}"/></th>
                 </tr>
             </thead>
             <tbody>
