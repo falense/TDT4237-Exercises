@@ -2,6 +2,7 @@
 <%@taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@page import="java.security.MessageDigest"%>
+<%@page import="java.math.*"%>
 
 <% 
 String username = request.getParameter("username");
@@ -11,28 +12,21 @@ if(username != null){
 %>
 
 <% 
-
 String encryption = request.getParameter("password");
-MessageDigest mdAlgorithm = MessageDigest.getInstance("MD5");
-mdAlgorithm.update(encryption.getBytes());
+ 
+    //Lage objet for MD5
+    MessageDigest digest = MessageDigest.getInstance("MD5");
+     
+    //Oppdatere input
+    digest.update(encryption.getBytes(), 0, encryption.length());
 
-byte[] digest = mdAlgorithm.digest();
-StringBuffer hexString = new StringBuffer();
+    //Konvertere strengen til Hex
+    encryption = new BigInteger(1, digest.digest()).toString(16);
 
-for (int i = 0; i < digest.length; i++) {
-   	encryption = Integer.toHexString(0xFF & digest[i]);
+%>
 
-    if (encryption.length() < 2) {
-        encryption = "0" + encryption;
-    }
-
-    hexString.append(encryption);
-}
-
-%> 
-
-<sql:query var="users" dataSource="jdbc/lut2">
-    SELECT * FROM admin_users
+<sql:query var="admin_users" dataSource="jdbc/lut2">
+    SELECT uname FROM admin_users
     WHERE  uname = ? <sql:param value="<%=username%>" /> 
     AND pw = ?   <sql:param value="<%=encryption%>" />
 
@@ -40,7 +34,7 @@ for (int i = 0; i < digest.length; i++) {
 
     
     
-<c:set var="userDetails" value="${users.rows[0]}"/>
+<c:set var="userDetails" value="${admin_users.rows[0]}"/>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -53,13 +47,12 @@ for (int i = 0; i < digest.length; i++) {
     <body>
         <c:choose>
             <c:when test="${ empty userDetails }">
-                Login failed
+                Login failed, check your username or password!
             </c:when>
             <c:otherwise>
                 <h1>Login succeeded</h1> 
-                Welcome <%=username%>.<br> 
-                Unfortunately, there is no admin functionality here. <br>
-                You need to figure out how to tamper with the application some other way.
+                Welcome <%=username%>.<br>
+                <% session.setAttribute("SessionName", username); %>
             </c:otherwise>
         </c:choose>
         </body>
