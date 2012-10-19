@@ -50,8 +50,33 @@ String encryption = request.getParameter("password");
                 Login failed, check your username or password!
             </c:when>
             <c:otherwise>
-                <h1>Login succeeded</h1> 
-                Welcome <%=username%>.<br>
+                <h1>Login succeeded. Welcome <%=username%>!</h1>  
+                <table border="0">
+            		<thead>
+                		<tr>
+                    		<th>Manage users</th>
+                		</tr>
+            		</thead>
+            		<tbody>
+                		<tr>
+                    		<td>Please select a user below to edit or delete:</td>
+                		</tr>
+                		<tr>
+                    		<td><form name="form_users" action="schools.jsp"
+                    			onSubmit="return validate_form()">
+                            	<strong>Select a user:</strong>
+                            	<select name= <c:out value="country"/>>
+                                	<c:forEach var="row" items="${country.rowsByIndex}">
+                                  	 	<c:forEach var="column" items="${row}">
+                                  	    	 <option value="<c:out value="${column}"/>"><c:out value="${column}"/></option>
+                                    	</c:forEach>
+                               		</c:forEach>
+                            	</select>
+                            	<input type="submit" value="submit" />
+                        	</form></td>
+               			</tr>
+            		</tbody>               
+                </table>
                 <% session.setAttribute("SessionName", username); %>
             </c:otherwise>
         </c:choose>
