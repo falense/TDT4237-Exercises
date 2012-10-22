@@ -32,28 +32,31 @@ String encryption = request.getParameter("password");
 
 </sql:query>
 
-    
-    
-<c:set var="userDetails" value="${admin_users.rows[0]}"/>
+
+
+<c:set var="userDetails" value="${admin_users.rows[0]}" />
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" type="text/css" href="lutstyle.css">
-        <title>LUT Admin pages</title>
-    </head>
-    <body>
-        <c:choose>
-            <c:when test="${ empty userDetails }">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" type="text/css" href="lutstyle.css">
+<title>LUT Admin pages</title>
+</head>
+<body>
+	<c:choose>
+		<c:when test="${ empty userDetails }">
                 Login failed, check your username or password!
             </c:when>
-            <c:otherwise>
-                <h1>Login succeeded</h1> 
+		<c:otherwise>
+			<h1>Login succeeded</h1> 
                 Welcome <%=username%>.<br>
-                <% session.setAttribute("SessionName", username); %>
-            </c:otherwise>
-        </c:choose>
-        </body>
-    </html>
+			<% session.setAttribute("SessionName", username); %>
+		</c:otherwise>
+	</c:choose>
+</body>
+</html>
+
+
+
