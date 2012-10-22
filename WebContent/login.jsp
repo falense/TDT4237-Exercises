@@ -3,6 +3,8 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@page import="java.security.MessageDigest"%>
 <%@page import="java.math.*"%>
+<%@page import="enc.*"%>
+
 
 <% 
 String admin_username = request.getParameter("username");
@@ -12,16 +14,12 @@ if(admin_username != null){
 %>
 
 <% 
-String encryption = request.getParameter("password");
- 
-    //Lage objet for MD5
-    MessageDigest digest = MessageDigest.getInstance("MD5");
-     
-    //Oppdatere input
-    digest.update(encryption.getBytes(), 0, encryption.length());
-
-    //Konvertere strengen til Hex
-    encryption = new BigInteger(1, digest.digest()).toString(16);
+String encryption = "";
+if(encryption == null){
+	encryption = " ";
+}
+else
+	encryption = MD5.hash(request.getParameter("password"));
 
 %>
 

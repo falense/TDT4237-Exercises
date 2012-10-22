@@ -5,7 +5,7 @@
     SELECT full_name FROM country
 </sql:query>
 
-<<script type="text/javascript">
+<script type="text/javascript">
 <!--
 var countryNames = new Array();
 
@@ -41,7 +41,8 @@ function validate_form ( )
     <head>
     	<% Object username = session.getAttribute("Username");
    			if(username == null){
-       			out.print("<meta http-equiv=\"refresh\" content=\"2;url=./loginNormalUser.jsp\"> ");
+       			out.print("<meta http-equiv=\"refresh\" content=\"1;url=./loginNormalUser.jsp\"> ");
+       			return;
    			}
 		%>
 
