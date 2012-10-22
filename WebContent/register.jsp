@@ -31,7 +31,7 @@ public boolean validatePasswordLength(String password){
 		return false;
 }
 public boolean validatePasswordContent(String password){
-	return false;
+	return true;
 }
 public boolean validatePassword(String password){
 	return validatePasswordLength(password) && validatePasswordContent(password);
