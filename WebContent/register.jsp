@@ -2,9 +2,43 @@
 <%@taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql"%>
 <%@ page import="sun.net.smtp.SmtpClient, java.io.*" %>
 <%@ page import="java.math.BigInteger, java.security.SecureRandom"%>
-
-
+<%@ page import="enc.*" %>
+<%@ page import="javax.mail.internet.InternetAddress" %>
+<%@ page import ="javax.mail.internet.AddressException" %>
 <%!
+
+public boolean validateEmail(String email){
+   boolean result = true;
+   try {
+      InternetAddress emailAddr = new InternetAddress(email);
+      emailAddr.validate();
+   } catch (AddressException ex) {
+      result = false;
+   }
+	return true;
+}
+public boolean validateUsername(String username){
+	if (username.equals("Luka"))
+		return false;
+	else
+		return true;
+	
+}
+public boolean validatePasswordLength(String password){
+	if (password.length() > 6)
+		return true;
+	else
+		return false;
+}
+public boolean validatePasswordContent(String password){
+	return false;
+}
+public boolean validatePassword(String password){
+	return validatePasswordLength(password) && validatePasswordContent(password);
+}
+public boolean validate(String username, String password, String email){
+	return validateEmail(email) && validateUsername(username) && validatePassword(password);
+}
 public String sendVerificationMail (String to, String token)
 {
 	String from="no-reply@stud.ntnu.no";
@@ -121,7 +155,7 @@ public String sendVerificationMail (String to, String token)
 					
 					<c:otherwise>
 						<c:choose>
-							<c:when test="${validate()}">
+							<c:when test="${false}">
 							</c:when>
 							<c:otherwise>
 								<c:set var="username" scope="session" value="${param.username }"/>
@@ -134,6 +168,7 @@ public String sendVerificationMail (String to, String token)
 									String token = new BigInteger(32, r).toString(40);
 									out.print(sendVerificationMail(request.getParameter("email"),token));
 									session.setAttribute("token", token);
+									session.setAttribute("password",(String)MD5.hash((String)session.getAttribute("password")));
 								%>	
 		
 								</th></tr></thead>
