@@ -5,6 +5,7 @@
 <%@ page import="sun.net.smtp.SmtpClient, java.io.*" %>
 <%@ page import="java.math.BigInteger, java.security.SecureRandom"%>
 <%@ page import="enc.*" %>
+<%@ page language="java" import="captchas.CaptchasDotNet" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -43,15 +44,53 @@ public String sendPasswordMail (String to, String password)
 	 return output;
 }
 %>
+<%
+boolean captchaGood = false;
+CaptchasDotNet captchas = new captchas.CaptchasDotNet(
+   request.getSession(true),     // Ensure session
+  "progsikgr7",                       // client
+  "NY0lOO3AAiKZpv1U8cSjEageoQSJoxioVUYOro1e"                      // secret
+  );
+ String password = request.getParameter("password");
+String body;
+switch (captchas.check(password)) {
+   case 's':
+     body = "Session seems to be timed out or broken. ";
+     body += "Please try again or report error to administrator.";
+     break;
+   case 'm':
+     body = "Every CAPTCHA can only be used once. ";
+     body += "The current CAPTCHA has already been used. ";
+     body += "Please use back button and reload";
+     break;
+   case 'w':
+     body = "You entered the wrong password. ";
+     body += "Please use back button and try again. ";
+     break;
+   default:
+     body = "";
+	 captchaGood = true;
+     break;
+ }
+ %>
 
 <%
 if(pageContext.getAttribute("user") != null)
 {
-	SecureRandom r = new SecureRandom();
-	String pass = new BigInteger(40, r).toString(32);
-	out.print(sendPasswordMail(request.getParameter("email"),pass));
-	pass = MD5.hash(pass);
-	pageContext.setAttribute("password", pass);
+	if(captchaGood == true)
+	{
+		SecureRandom r = new SecureRandom();
+		String pass = new BigInteger(40, r).toString(32);
+		out.print(sendPasswordMail(request.getParameter("email"),pass));
+		pass = MD5.hash(pass);
+		//out.print(pass);
+		pageContext.setAttribute("password", pass);
+	}
+	else
+	{
+		out.print(body);
+	}
+	
 }
 else
 {
