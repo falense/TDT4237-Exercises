@@ -38,6 +38,7 @@ String encryption = request.getParameter("password");
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="refresh" content="2;url=./index.jsp"> 
 <link rel="stylesheet" type="text/css" href="lutstyle.css">
 <title>LUT Log in pages</title>
 </head>
@@ -49,7 +50,8 @@ String encryption = request.getParameter("password");
 		<c:otherwise>
 			<h1>Login succeeded</h1> 
                 Welcome <%=username%>.<br>
-                <% session.setAttribute("SessionName", username); %>
+               
+                <% session.setAttribute("Username", username); %>
 		</c:otherwise>
 	</c:choose>
 </body>
