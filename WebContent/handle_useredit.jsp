@@ -23,4 +23,17 @@
 	</c:otherwise>
 </c:choose>			
 
+
 <meta http-equiv="Refresh" content="3; url=login.jsp">
+<html>
+<head>
+    	<% Object username = session.getAttribute("AdminUsername");
+   			if(username == null){
+       			out.print("<meta http-equiv=\"refresh\" content=\"1;url=./loginNormalUser.jsp\"> ");
+       			return;
+   			}
+		%>
+</head>
+<body>
+</body>
+</html>

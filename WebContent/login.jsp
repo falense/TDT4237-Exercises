@@ -14,12 +14,12 @@ if(admin_username != null){
 %>
 
 <% 
-String encryption = "";
+String encryption = request.getParameter("password");
 if(encryption == null){
 	encryption = " ";
 }
 else
-	encryption = MD5.hash(request.getParameter("password"));
+	encryption = MD5.hash(encryption);
 
 %>
 
@@ -76,7 +76,7 @@ else
                			</tr>
             		</tbody>               
                 </table>
-                <% session.setAttribute("SessionName", admin_username); %>
+                <% session.setAttribute("AdminUsername", admin_username); %>
             </c:otherwise>
         </c:choose>
         </body>

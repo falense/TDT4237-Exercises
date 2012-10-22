@@ -12,6 +12,12 @@
 <!DOCTYPE html>
 <html>
     <head>
+    <% Object username = session.getAttribute("AdminUsername");
+   			if(username == null){
+       			out.print("<meta http-equiv=\"refresh\" content=\"1;url=./loginNormalUser.jsp\"> ");
+       			return;
+   			}
+		%>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" type="text/css" href="lutstyle.css">
         <title>LUT 2.0 - <c:out value="${param.normal_users}"/></title>

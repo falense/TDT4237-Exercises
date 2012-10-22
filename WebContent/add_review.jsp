@@ -29,6 +29,12 @@ else
 <!DOCTYPE html>
 <html>
     <head>
+    <% Object sUsername = session.getAttribute("Username");
+   			if(sUsername == null){
+       			out.print("<meta http-equiv=\"refresh\" content=\"1;url=./loginNormalUser.jsp\"> ");
+       			return;
+   			}
+		%>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta http-equiv="refresh" content="5;url=index.jsp"> 
         <link rel="stylesheet" type="text/css" href="lutstyle.css">

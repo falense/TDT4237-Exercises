@@ -18,7 +18,7 @@ if(delUni != null){
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-    	<% Object username = session.getAttribute("Username");
+    	<% Object username = session.getAttribute("AdminUsername");
    			if(username == null){
        			out.print("<meta http-equiv=\"refresh\" content=\"1;url=./loginNormalUser.jsp\"> ");
        			return;
