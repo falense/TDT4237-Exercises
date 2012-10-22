@@ -6,6 +6,8 @@
     WHERE user_id = ? <sql:param value="${param.normal_users}"/>
 </sql:query>
 
+<%session.setAttribute("user_id", request.getParameter("normal_users")); %>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -32,30 +34,13 @@
                     </td>
                 </tr>
                 <tr>
-                	<td><input type="submit" value="Save"/></td>
+                	<td><input type="submit" name="submit" value="Delete"/></td>
+                	<td><input type="submit" name="submit" value="Save"/></td>
                 </tr>
         	</tbody>        	
     	</table>
     	</form>  
-    	<form name="userdata" action="handle_useredit.jsp">
-        <table border="0">
-        	<tbody>        	
-            	<tr>
-                	<td><strong>Username: </strong></td>
-                	<td><input type="text" size="35" name="username" value="<c:out value="${userDetails[1]}"/>" /></td>
-            	</tr>
-            	<tr>
-                	<td><strong>Email: </strong></td>
-                	<td><input type="text" size="35" name="email" value="<c:out value="${userDetails[3]}"/>" />
-                		<br>
-                    </td>
-                </tr>
-                <tr>
-                	<td><input type="submit" value="Delete"/></td>
-                </tr>
-        	</tbody>        	
-    	</table>
-    	</form>  
+
     	</c:forEach> 
 	</body>
 </html>
