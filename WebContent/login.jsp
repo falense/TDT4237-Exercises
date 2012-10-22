@@ -32,7 +32,7 @@ String encryption = request.getParameter("password");
 </sql:query>
 
 <sql:query var="normal_users" dataSource="jdbc/lut2">
-    SELECT uname FROM normal_users
+    SELECT user_id, uname FROM normal_users
 </sql:query>
     
 <c:set var="userDetails" value="${admin_users.rows[0]}"/>
@@ -68,9 +68,7 @@ String encryption = request.getParameter("password");
                             	<strong>Select a user:</strong>
                             	<select name= <c:out value="normal_users"/>>
                                 	<c:forEach var="row" items="${normal_users.rowsByIndex}">
-                                  	 	<c:forEach var="column" items="${row}">
-                                  	    	 <option value="<c:out value="${column}"/>"><c:out value="${column}"/></option>
-                                    	</c:forEach>
+                                  		<option value="<c:out value="${row[0]}"/>"> <c:out value="${row[1]}"/></option>
                                		</c:forEach>
                             	</select>
                             	<input type="submit" value="Edit" />

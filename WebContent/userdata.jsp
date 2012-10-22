@@ -3,7 +3,7 @@
 
 <sql:query var="user" dataSource="jdbc/lut2">
     SELECT * FROM normal_users
-    WHERE uname = ? <sql:param value="${param.normal_users}"/>
+    WHERE user_id = ? <sql:param value="${param.normal_users}"/>
 </sql:query>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -18,8 +18,28 @@
     <body>
         <c:forEach var="userDetails" items="${user.rowsByIndex}">
         <h1>Edit user</h1>
+        <form name="userdata" action="handle_useredit.jsp">
         <table border="0">
-        	<tbody>
+        	<tbody>        	
+            	<tr>
+                	<td><strong>Username: </strong></td>
+                	<td><input type="text" size="35" name="username" value="<c:out value="${userDetails[1]}"/>" /></td>
+            	</tr>
+            	<tr>
+                	<td><strong>Email: </strong></td>
+                	<td><input type="text" size="35" name="email" value="<c:out value="${userDetails[3]}"/>" />
+                		<br>
+                    </td>
+                </tr>
+                <tr>
+                	<td><input type="submit" value="Save"/></td>
+                </tr>
+        	</tbody>        	
+    	</table>
+    	</form>  
+    	<form name="userdata" action="handle_useredit.jsp">
+        <table border="0">
+        	<tbody>        	
             	<tr>
                 	<td><strong>Username: </strong></td>
                 	<td><input type="text" size="35" name="username" value="<c:out value="${userDetails[1]}"/>" /></td>
@@ -32,25 +52,10 @@
                 </tr>
                 <tr>
                 	<td><input type="submit" value="Delete"/></td>
-                	<td><input type="submit" value="Save"/></td>
                 </tr>
-               
-           <%--   <sql:transaction dataSource="jdbc/lut2">
-    				<sql:update var="count">
-        				UPDATE normal_users SET uname=?, email=? WHERE uname=?
-        				<sql:param value='${username}' />
-        				<sql:param value='${email}' />
-        				<sql:param value='${param.normal_users}' />        				
-    				</sql:update>
-			</sql:transaction> --%>
-			
-			<%--   <sql:transaction dataSource="jdbc/lut2">
-        				DELETE FROM normal_users WHERE uname=?
-        				<sql:param value='${param.normal_users}' />        				
-			</sql:transaction> --%>
-                
         	</tbody>        	
-    	</table>  
+    	</table>
+    	</form>  
     	</c:forEach> 
 	</body>
 </html>
