@@ -5,9 +5,9 @@
 <%@page import="java.math.*"%>
 
 <% 
-String username = request.getParameter("username");
-if(username != null){
-	username = username.replace('<', ' ').replace('>', ' ');	
+String admin_username = request.getParameter("username");
+if(admin_username != null){
+	admin_username = admin_username.replace('<', ' ').replace('>', ' ');	
 }
 %>
 
@@ -27,12 +27,14 @@ String encryption = request.getParameter("password");
 
 <sql:query var="admin_users" dataSource="jdbc/lut2">
     SELECT uname FROM admin_users
-    WHERE  uname = ? <sql:param value="<%=username%>" /> 
+    WHERE  uname = ? <sql:param value="<%=admin_username%>" /> 
     AND pw = ?   <sql:param value="<%=encryption%>" />
-
 </sql:query>
 
-
+<c:set var="userDetails" value="${admin_users.rows[0]}" />
+<sql:query var="normal_users" dataSource="jdbc/lut2">
+    SELECT uname FROM normal_users
+</sql:query>
 
 <c:set var="userDetails" value="${admin_users.rows[0]}" />
 
@@ -58,5 +60,39 @@ String encryption = request.getParameter("password");
 </body>
 </html>
 
-
-
+<c:otherwise>
+	<h1>
+		Login succeeded. Welcome
+		<%=admin_username%>!
+	</h1>
+	<table border="0">
+		<thead>
+			<tr>
+				<th>Manage users</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>Please select a user below to edit or delete:</td>
+			</tr>
+			<tr>
+				<td><form name="form_users" action="userdata.jsp"
+						onSubmit="return validate_form()">
+						<strong>Select a user:</strong> <select
+							name=<c:out value="normal_users"/>>
+							<c:forEach var="row" items="${normal_users.rowsByIndex}">
+								<c:forEach var="column" items="${row}">
+									<option value="<c:out value="${column}"/>">
+										<c:out value="${column}" />
+									</option>
+								</c:forEach>
+							</c:forEach>
+						</select> <input type="submit" value="Edit" />
+					</form></td>
+			</tr>
+		</tbody>
+	</table>
+	<% session.setAttribute("SessionName", admin_username); %>
+</c:otherwise>
+</body>
+</html>
