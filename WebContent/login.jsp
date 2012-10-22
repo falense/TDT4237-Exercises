@@ -6,6 +6,9 @@
 <%@page import="enc.*"%>
 
 
+
+
+
 <% 
 String admin_username = request.getParameter("username");
 if(admin_username != null){
@@ -40,6 +43,14 @@ else
 <!DOCTYPE html>
 <html>
 <head>
+<% Object username = session.getAttribute("AdminUsername");
+   			if(username == null){
+       			
+   			}
+   			else
+   				pageContext.setAttribute("userDetails", 1234);
+   				
+		%>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <link rel="stylesheet" type="text/css" href="lutstyle.css">
