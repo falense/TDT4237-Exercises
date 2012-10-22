@@ -3,27 +3,35 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
 
-<% 
-String shortname;
-if (request.getParameter("shortNameInput").length() > 20)
-{
-	shortname = request.getParameter("shortNameInput").substring(0, 20).replace('<', ' ').replace('>', ' ');
-}
-else
-{
-	shortname = request.getParameter("shortNameInput").replace('<', ' ').replace('>', ' ');
-}
+<%
+	String shortname;
+	if (request.getParameter("shortNameInput") != null) {
+		if (request.getParameter("shortNameInput").length() > 20) {
+	shortname = request.getParameter("shortNameInput")
+			.substring(0, 20).replace('<', ' ')
+			.replace('>', ' ');
+		} else {
+	shortname = request.getParameter("shortNameInput")
+			.replace('<', ' ').replace('>', ' ');
+		}
 
-String fullname;
-if (request.getParameter("fullNameInput").length() > 20)
-{
-	fullname = request.getParameter("fullNameInput").substring(0, 20).replace('<', ' ').replace('>', ' ');
-}
-else
-{
-	fullname = request.getParameter("fullNameInput").replace('<',' ').replace('>', ' ');
-}
+	}
+	else shortname="";
 
+	String fullname;
+	if (request.getParameter("fullNameInput") != null){
+		if (request.getParameter("fullNameInput").length() > 20) {
+			fullname = request.getParameter("fullNameInput")
+					.substring(0, 20).replace('<', ' ')
+					.replace('>', ' ');
+		} else {
+			fullname = request.getParameter("fullNameInput")
+					.replace('<', ' ').replace('>', ' ');
+		}
+
+	}
+	else
+		fullname="";
 %>
 
 <sql:transaction dataSource="jdbc/lut2">

@@ -3,56 +3,56 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 
-<% 
-String shortname;
-if (request.getParameter("shortNameInput").length() > 20)
-{
-	shortname = request.getParameter("shortNameInput").substring(0, 20).replace('<', ' ').replace('>', ' ');
-}
-else
-{
-	shortname = request.getParameter("shortNameInput").replace('<', ' ').replace('>', ' ');
-}
+<%
+	String shortname;
+	if (request.getParameter("shortNameInput") != null) {
 
-String fullname;
-if (request.getParameter("fullNameInput").length() > 20)
-{
-	fullname = request.getParameter("fullNameInput").substring(0, 20).replace('<', ' ').replace('>', ' ');
-}
-else
-{
-	fullname = request.getParameter("fullNameInput").replace('<',' ').replace('>', ' ');
-}
+		if (request.getParameter("shortNameInput").length() > 20) {
+			shortname = request.getParameter("shortNameInput")
+					.substring(0, 20).replace('<', ' ')
+					.replace('>', ' ');
+		} else {
+			shortname = request.getParameter("shortNameInput")
+					.replace('<', ' ').replace('>', ' ');
+		}
+	}
+	else shortname="";
 
-String place="";
-if (request.getParameter("place").length() > 20)
-{
-	place = request.getParameter("place").substring(0, 20).replace('<', ' ').replace('>', ' ');
-}
-else
-{
-	place = request.getParameter("place").replace('<',' ').replace('>', ' ');
-}
-String zip="0";
-if (request.getParameter("zip").length() > 20)
-{
-	zip = request.getParameter("zip").substring(0, 20).replace('<', ' ').replace('>', ' ');
-}
-else
-{
-	zip = request.getParameter("zip").replace('<',' ').replace('>', ' ');
-}
-int zipParse = Integer.parseInt(zip); 
+	String fullname;
+	if (request.getParameter("fullNameInput").length() > 20) {
+		fullname = request.getParameter("fullNameInput")
+				.substring(0, 20).replace('<', ' ').replace('>', ' ');
+	} else {
+		fullname = request.getParameter("fullNameInput")
+				.replace('<', ' ').replace('>', ' ');
+	}
 
-String country="";
-if (request.getParameter("country").length() > 20)
-{
-	country = request.getParameter("country").substring(0, 20).replace('<', ' ').replace('>', ' ');
-}
-else
-{
-	country = request.getParameter("country").replace('<',' ').replace('>', ' ');
-}
+	String place = "";
+	if (request.getParameter("place").length() > 20) {
+		place = request.getParameter("place").substring(0, 20)
+				.replace('<', ' ').replace('>', ' ');
+	} else {
+		place = request.getParameter("place").replace('<', ' ')
+				.replace('>', ' ');
+	}
+	String zip = "0";
+	if (request.getParameter("zip").length() > 20) {
+		zip = request.getParameter("zip").substring(0, 20)
+				.replace('<', ' ').replace('>', ' ');
+	} else {
+		zip = request.getParameter("zip").replace('<', ' ')
+				.replace('>', ' ');
+	}
+	int zipParse = Integer.parseInt(zip);
+
+	String country = "";
+	if (request.getParameter("country").length() > 20) {
+		country = request.getParameter("country").substring(0, 20)
+				.replace('<', ' ').replace('>', ' ');
+	} else {
+		country = request.getParameter("country").replace('<', ' ')
+				.replace('>', ' ');
+	}
 %>
 
 <sql:transaction dataSource="jdbc/lut2">
