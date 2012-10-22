@@ -39,6 +39,11 @@ function validate_form ( )
 <!DOCTYPE html>
 <html>
     <head>
+    	<% Object username = session.getAttribute("Username");
+   			if(username == null){
+       			out.print("<meta http-equiv=\"refresh\" content=\"2;url=./loginNormalUser.jsp\"> ");
+   			}
+		%>
 
         <meta http-equiv="Content-Type" content="text/html"> 
         <link rel="stylesheet" type="text/css" href="lutstyle.css">
