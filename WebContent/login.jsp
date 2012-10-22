@@ -31,23 +31,25 @@ String encryption = request.getParameter("password");
     AND pw = ?   <sql:param value="<%=encryption%>" />
 </sql:query>
 
+<c:set var="userDetails" value="${admin_users.rows[0]}" />
 <sql:query var="normal_users" dataSource="jdbc/lut2">
     SELECT user_id, uname FROM normal_users
 </sql:query>
-    
-<c:set var="userDetails" value="${admin_users.rows[0]}"/>
+
+<c:set var="userDetails" value="${admin_users.rows[0]}" />
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" type="text/css" href="lutstyle.css">
-        <title>LUT Admin pages</title>
-    </head>
-    <body>
-        <c:choose>
-            <c:when test="${ empty userDetails }">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<link rel="stylesheet" type="text/css" href="lutstyle.css">
+<title>LUT Admin pages</title>
+</head>
+<body>
+	<c:choose>
+		<c:when test="${ empty userDetails }">
                 Login failed, check your username or password!
             </c:when>
             <c:otherwise>

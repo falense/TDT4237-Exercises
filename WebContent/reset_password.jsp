@@ -4,6 +4,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="sun.net.smtp.SmtpClient, java.io.*" %>
 <%@ page import="java.math.BigInteger, java.security.SecureRandom"%>
+<%@ page import="enc.*" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -49,7 +50,7 @@ if(pageContext.getAttribute("user") != null)
 	SecureRandom r = new SecureRandom();
 	String pass = new BigInteger(40, r).toString(32);
 	out.print(sendPasswordMail(request.getParameter("email"),pass));
-	//Implementer Lukas md5 her
+	pass = MD5.hash(pass);
 	pageContext.setAttribute("password", pass);
 }
 else
