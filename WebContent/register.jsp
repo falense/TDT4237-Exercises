@@ -5,6 +5,8 @@
 <%@ page import="enc.*" %>
 <%@ page import="javax.mail.internet.InternetAddress" %>
 <%@ page import ="javax.mail.internet.AddressException" %>
+<%@ page language="java" import="captchas.CaptchasDotNet" %>
+
 <%!
 
 public boolean validateEmail(String email){
@@ -68,16 +70,28 @@ public String sendVerificationMail (String to, String token)
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" type="text/css" href="lutstyle.css">
         <title>LUT 3.0 - Help Students Conquer the World</title>
+         <%
+         CaptchasDotNet captchas = new captchas.CaptchasDotNet(
+		   request.getSession(true),     // Ensure session
+		  "progsikgr7",                       // client
+		  "NY0lOO3AAiKZpv1U8cSjEageoQSJoxioVUYOro1e"                      // secret
+		  );
+		%>
+		        
     </head>
     <body>
         <h1>Hi student!</h1>
         <table border="0">
+        	<%
+					pageContext.setAttribute("r",false);//captchas.check(request.getParameter("captcha")) != 't');
+											
+					%>
                <c:choose>
 					<c:when test="${ ! empty param.token}">
 						<c:choose>
 							<c:when test="${token eq param.token}">
 								<c:choose>
-									<c:when test="${empty username or empty password or empty email}">
+									<c:when test="${empty username or empty password or empty email }">
 										<thead>
 											<tr><th>
 												Somewhere an error occurred, contact an administrator
@@ -124,8 +138,8 @@ public String sendVerificationMail (String to, String token)
 							</c:otherwise>
 						</c:choose>
 					</c:when>
-					<c:when test="${empty param.username or empty param.password or empty param.email}">
-						
+				
+					<c:when test="${empty param.username or empty param.password or empty param.email or r }">
 							<form method="post" action="register.jsp">
 									<thead>
 										<tr><th colspan="2"><h2>Please register</h2></th></tr>
@@ -141,6 +155,9 @@ public String sendVerificationMail (String to, String token)
 										<td>Email:</td>
 										<td><input type="text" value="Email" name="email"/></td>
 										</tr><tr>
+										<td><%= captchas.image() %></td><td><input type="text"/></td>
+										</tr><tr>
+										
 										<td colspan="2"><input type="submit" value="Register"/></td>
 										</tr>
 									</tbody>
@@ -175,7 +192,7 @@ public String sendVerificationMail (String to, String token)
 										<td colspan="2"><input type="submit" value="Verify"/></td>
 										</tr>
 									</tbody>
-								</form>
+								</form>uii
 							</c:otherwise>
 						</c:choose>
 					</c:otherwise>
@@ -199,3 +216,5 @@ public String sendVerificationMail (String to, String token)
     </body>
 </html>
 
+<%
+%>
