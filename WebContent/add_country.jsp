@@ -34,14 +34,6 @@
 		fullname="";
 %>
 
-<sql:transaction dataSource="jdbc/lut2">
-	<sql:update var="count">
-        INSERT INTO country VALUES (?, ?)
-        <sql:param value='<%=shortname%>' />
-		<sql:param value='<%=fullname%>' />
-	</sql:update>
-</sql:transaction>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -49,7 +41,7 @@
 
 <% Object username = session.getAttribute("AdminUsername");
    			if(username == null){
-       			out.print("<meta http-equiv=\"refresh\" content=\"1;url=./loginNormalUser.jsp\"> ");
+       			out.print("<meta http-equiv=\"refresh\" content=\"1;url=./lutadmin.jsp\"> ");
        			return;
    			}
 		%>
@@ -65,3 +57,16 @@
 	</tr>
 </body>
 </html>
+<
+<c:choose>
+	<c:when
+		test="${ ! empty param.fullNameInput || !empty param.shortNameInput }">
+		<sql:transaction dataSource="jdbc/lut2">
+			<sql:update var="count">
+        INSERT INTO country VALUES (?, ?)
+        	<sql:param value='<%=shortname%>' />
+			<sql:param value='<%=fullname%>' />
+			</sql:update>
+		</sql:transaction>
+	</c:when>
+</c:choose>

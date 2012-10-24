@@ -8,11 +8,6 @@ if(delUni != null){
 }
 %>
 
-<sql:update var="school" dataSource="jdbc/lut2">
-  		DELETE FROM school WHERE full_name = ?
-  	<sql:param value='<%=delUni%>' />
-</sql:update>
-
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -20,7 +15,7 @@ if(delUni != null){
 <head>
     	<% Object username = session.getAttribute("AdminUsername");
    			if(username == null){
-       			out.print("<meta http-equiv=\"refresh\" content=\"1;url=./loginNormalUser.jsp\"> ");
+       			out.print("<meta http-equiv=\"refresh\" content=\"1;url=./lutadmin.jsp\"> ");
        			return;
    			}
 		%>
@@ -34,3 +29,12 @@ if(delUni != null){
 	You will be redirected back to the previous page in a few seconds.
 </body>
 </html>
+
+<c:choose>
+	<c:when test="${! empty param.admin_delUni }">
+		<sql:update var="school" dataSource="jdbc/lut2">
+  		DELETE FROM school WHERE full_name = ?
+  		<sql:param value='<%=delUni%>' />
+		</sql:update>
+	</c:when>
+</c:choose>

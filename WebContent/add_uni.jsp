@@ -4,67 +4,67 @@
 
 
 <%
-	String shortname;
+	String shortname ="";
 	if (request.getParameter("shortNameInput") != null) {
 
 		if (request.getParameter("shortNameInput").length() > 20) {
-			shortname = request.getParameter("shortNameInput")
-					.substring(0, 20).replace('<', ' ')
-					.replace('>', ' ');
+	shortname = request.getParameter("shortNameInput")
+	.substring(0, 20).replace('<', ' ')
+	.replace('>', ' ');
 		} else {
-			shortname = request.getParameter("shortNameInput")
-					.replace('<', ' ').replace('>', ' ');
+	shortname = request.getParameter("shortNameInput")
+	.replace('<', ' ').replace('>', ' ');
 		}
 	}
-	else shortname="";
 
-	String fullname;
-	if (request.getParameter("fullNameInput").length() > 20) {
-		fullname = request.getParameter("fullNameInput")
-				.substring(0, 20).replace('<', ' ').replace('>', ' ');
-	} else {
-		fullname = request.getParameter("fullNameInput")
-				.replace('<', ' ').replace('>', ' ');
+	String fullname="";
+	if (request.getParameter("fullNameInput") != null) {
+		if (request.getParameter("fullNameInput").length() > 20) {
+	fullname = request.getParameter("fullNameInput")
+	.substring(0, 20).replace('<', ' ')
+	.replace('>', ' ');
+		} else {
+	fullname = request.getParameter("fullNameInput")
+	.replace('<', ' ').replace('>', ' ');
+		}
+
 	}
 
 	String place = "";
-	if (request.getParameter("place").length() > 20) {
-		place = request.getParameter("place").substring(0, 20)
-				.replace('<', ' ').replace('>', ' ');
-	} else {
-		place = request.getParameter("place").replace('<', ' ')
-				.replace('>', ' ');
+	if (request.getParameter("place") != null) {
+		if (request.getParameter("place").length() > 20) {
+	place = request.getParameter("place").substring(0, 20)
+	.replace('<', ' ').replace('>', ' ');
+		} else {
+	place = request.getParameter("place").replace('<', ' ')
+	.replace('>', ' ');
+		}
 	}
-	String zip = "0";
-	if (request.getParameter("zip").length() > 20) {
-		zip = request.getParameter("zip").substring(0, 20)
-				.replace('<', ' ').replace('>', ' ');
-	} else {
-		zip = request.getParameter("zip").replace('<', ' ')
-				.replace('>', ' ');
+	int zipParse = 0;
+	String zip = "";
+	if (request.getParameter("zip") != null) {
+		zip="0";
+		if (request.getParameter("zip").length() > 20) {
+	zip = request.getParameter("zip").substring(0, 20)
+			.replace('<', ' ').replace('>', ' ');
+		} else {
+	zip = request.getParameter("zip").replace('<', ' ')
+			.replace('>', ' ');
+		}
+		zipParse = Integer.parseInt(zip);
 	}
-	int zipParse = Integer.parseInt(zip);
 
 	String country = "";
-	if (request.getParameter("country").length() > 20) {
-		country = request.getParameter("country").substring(0, 20)
-				.replace('<', ' ').replace('>', ' ');
-	} else {
-		country = request.getParameter("country").replace('<', ' ')
-				.replace('>', ' ');
+	if (request.getParameter("country") != null) {
+		if (request.getParameter("country").length() > 20) {
+			country = request.getParameter("country").substring(0, 20)
+					.replace('<', ' ').replace('>', ' ');
+		} else {
+			country = request.getParameter("country").replace('<', ' ')
+					.replace('>', ' ');
+		}
 	}
 %>
-
-<sql:transaction dataSource="jdbc/lut2">
-    <sql:update var="count">
-        INSERT INTO school(full_name, short_name, place, zip, country) VALUES (?, ?, ?, ?, ?)
-        <sql:param value='<%=fullname%>' />
-        <sql:param value='<%=shortname%>' />
-        <sql:param value='<%=place%>'/>
-        <sql:param value='<%=zipParse%>'/>
-        <sql:param value='<%=country%>'/>
-    </sql:update>
-</sql:transaction>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -72,7 +72,7 @@
     <head>
         	<% Object username = session.getAttribute("AdminUsername");
    			if(username == null){
-       			out.print("<meta http-equiv=\"refresh\" content=\"1;url=./loginNormalUser.jsp\"> ");
+       			out.print("<meta http-equiv=\"refresh\" content=\"1;url=./lutadmin.jsp\"> ");
        			return;
    			}
 		%>
@@ -87,3 +87,19 @@
     </tr>
 </body>
 </html>
+
+<c:choose>
+	<c:when
+		test="${ ! empty param.shortNameInput || ! empty param.fullNameInput || ! empty param.place || ! empty param.zip || ! empty param.country}">
+		<sql:transaction dataSource="jdbc/lut2">
+			<sql:update var="count">
+        			INSERT INTO school(full_name, short_name, place, zip, country) VALUES (?, ?, ?, ?, ?)
+       				<sql:param value='<%=fullname%>' />
+				<sql:param value='<%=shortname%>' />
+				<sql:param value='<%=place%>' />
+				<sql:param value='<%=zipParse%>' />
+				<sql:param value='<%=country%>' />
+			</sql:update>
+		</sql:transaction>
+	</c:when>
+</c:choose>
