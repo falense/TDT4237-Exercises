@@ -1,6 +1,14 @@
 <%@taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
+<%@ page language="java" import="captchas.CaptchasDotNet" %>
+<%
+// Construct the captchas object (Default Values)
+CaptchasDotNet captchas = new captchas.CaptchasDotNet(
+   request.getSession(true),     // Ensure session
+  "progsikgr7",                       // client
+  "NY0lOO3AAiKZpv1U8cSjEageoQSJoxioVUYOro1e"                      // secret
+  );
+%>
 <sql:query var="reviews" dataSource="jdbc/lut2">
     SELECT * FROM user_reviews, school
     WHERE user_reviews.school_id = school.school_id
@@ -57,6 +65,10 @@
                             </textarea>
                             <br><br>
                             Your name: <input type="text" name="name" />
+                            <br><br>
+                            <%= captchas.image() %><br>
+           					<a href="<%= captchas.audioUrl() %>">Phonetic spelling (mp3)</a><br />
+                            Message: <input type="text" name="name" />
                             <br><br>
                             <input type="submit" value="Add review" />
                         </form>

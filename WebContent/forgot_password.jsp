@@ -8,16 +8,6 @@ CaptchasDotNet captchas = new captchas.CaptchasDotNet(
   "progsikgr7",                       // client
   "NY0lOO3AAiKZpv1U8cSjEageoQSJoxioVUYOro1e"                      // secret
   );
-// Construct the captchas object (Extended example)
-// CaptchasDotNet captchas = new captchas.CaptchasDotNet(
-//  request.getSession(true),     // Ensure session
-//  "demo",                       // client
-//  "secret",                     // secret
-//  "01",                         // alphabet
-//  16,                           // letters
-//  500,                          // width
-//  80                            // height
-//  );
 %>
 <!DOCTYPE html>
 <html>
