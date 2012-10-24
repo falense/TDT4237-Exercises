@@ -31,5 +31,6 @@
                 </tr>
             </tbody>
         </table>
+        <img src="http://www.trivergencia.com/wp-content/uploads/2008/06/my_little_pony_g.jpg" />
     </body>
 </html>

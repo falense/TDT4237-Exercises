@@ -6,9 +6,6 @@
 <%@page import="enc.*"%>
 
 
-
-
-
 <% 
 String admin_username = request.getParameter("username");
 if(admin_username != null){
@@ -52,7 +49,6 @@ else
    				
 		%>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
 <link rel="stylesheet" type="text/css" href="lutstyle.css">
 <title>LUT Admin pages</title>
 </head>
@@ -60,6 +56,7 @@ else
 	<c:choose>
 		<c:when test="${ empty userDetails }">
                 Login failed, check your username or password!
+                <meta http-equiv="Refresh" content="3; url=lutadmin.jsp">
             </c:when>
             <c:otherwise>
                 <h1>Login succeeded. Welcome <%=admin_username%>!</h1>  
@@ -74,8 +71,7 @@ else
                     		<td>Please select a user below to edit or delete:</td>
                 		</tr>
                 		<tr>
-                    		<td><form name="form_users" action="userdata.jsp"
-                    			onSubmit="return validate_form()">
+                    		<td><form name="form_users" action="userdata.jsp">
                             	<strong>Select a user:</strong>
                             	<select name= <c:out value="normal_users"/>>
                                 	<c:forEach var="row" items="${normal_users.rowsByIndex}">
