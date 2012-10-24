@@ -25,7 +25,9 @@
                             <p>
                                 Password:</font><input type="password" name="password" size="20"></p>
                             <p><input type="submit" value="submit" name="login"></p>
-                        </form></td>
+                        </form>
+                        <br /><a href="forgot_password.jsp">Forgot your password?</a>
+                        </td>
                 </tr>
             </tbody>
         </table>
