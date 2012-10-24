@@ -10,7 +10,15 @@ CaptchasDotNet captchas = new captchas.CaptchasDotNet(
   "progsikgr7",                       // client
   "NY0lOO3AAiKZpv1U8cSjEageoQSJoxioVUYOro1e"                      // secret
   );
- String password = request.getParameter("password");
+String password;
+if(request.getParameter("password") == null)
+{ 
+	password = " "; 
+}
+else
+{
+	password = request.getParameter("password");
+}
 String body;
 switch (captchas.check(password)) {
    case 's':
