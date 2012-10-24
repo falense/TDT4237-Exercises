@@ -26,6 +26,7 @@
                                 Password:</font><input type="password" name="password" size="20"></p>
                             <p><input type="submit" value="submit" name="login"></p>
                         </form>
+                        <br /><a href="register.jsp">Register new account</a>
                         <br /><a href="forgot_password.jsp">Forgot your password?</a>
                         </td>
                 </tr>
