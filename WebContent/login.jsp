@@ -5,7 +5,6 @@
 <%@page import="java.math.*"%>
 <%@page import="enc.*"%>
 
-
 <% 
 String admin_username = request.getParameter("username");
 if(admin_username != null){
@@ -35,6 +34,36 @@ else
 </sql:query>
 
 <c:set var="userDetails" value="${admin_users.rows[0]}" />
+
+<script type="text/javascript">
+<!--
+var countryNames = new Array();
+
+<c:forEach var="row" items="${country.rowsByIndex}">
+	<c:forEach var="column" items="${row}">
+    	countryNames.push(value="${column}");
+	</c:forEach>
+</c:forEach>
+
+function validate_form ( )
+{
+	valid = false;
+	for(var i=0; i< countryNames.length; i++){
+		if ( countryNames[i] == document.form_country.country.value )
+		{
+	        valid = true;
+	        return valid;
+	    }
+	}
+	if(valid = false){
+		alert( "Please stop tampering with the web parameters." );
+	}
+	
+    return valid;
+}
+
+//-->
+</script>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -71,7 +100,7 @@ else
                     		<td>Please select a user below to edit or delete:</td>
                 		</tr>
                 		<tr>
-                    		<td><form name="form_users" action="userdata.jsp">
+                    		<td><form name="form_users" action="userdata.jsp" onSubmit="">
                             	<strong>Select a user:</strong>
                             	<select name= <c:out value="normal_users"/>>
                                 	<c:forEach var="row" items="${normal_users.rowsByIndex}">
