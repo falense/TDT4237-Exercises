@@ -45,7 +45,7 @@ var countryNames = new Array();
 	</c:forEach>
 </c:forEach>
 
-function validate_form ( )
+function validate_parameters ( )
 {
 	valid = false;
 	for(var i=0; i< countryNames.length; i++){
@@ -115,5 +115,8 @@ function validate_form ( )
                 <% session.setAttribute("AdminUsername", admin_username); %>
             </c:otherwise>
         </c:choose>
+        <br>
+        <a href="admin_countries.jsp">Manage countries</a><br>
+        <a href="admin_unis.jsp">Manage schools</a>
         </body>
     </html>

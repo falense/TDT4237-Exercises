@@ -1,5 +1,19 @@
 <%@taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<meta http-equiv="Refresh" content="3; url=login.jsp">
+<html>
+<head>
+    	<% Object username = session.getAttribute("AdminUsername");
+   			if(username == null){
+       			out.print("<meta http-equiv=\"refresh\" content=\"1;url=./lutadmin.jsp\"> ");
+       			return;
+   			}
+		%>
+</head>
+<body>
+</body>
+</html>
 <c:choose>
 	<c:when test="${param.submit == \"Save\"}">
 		The user is updated. You will be redirected in 3 seconds.
@@ -23,17 +37,3 @@
 	</c:otherwise>
 </c:choose>			
 
-
-<meta http-equiv="Refresh" content="3; url=login.jsp">
-<html>
-<head>
-    	<% Object username = session.getAttribute("AdminUsername");
-   			if(username == null){
-       			out.print("<meta http-equiv=\"refresh\" content=\"1;url=./lutadmin.jsp\"> ");
-       			return;
-   			}
-		%>
-</head>
-<body>
-</body>
-</html>
