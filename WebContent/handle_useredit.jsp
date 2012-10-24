@@ -29,7 +29,7 @@
 <head>
     	<% Object username = session.getAttribute("AdminUsername");
    			if(username == null){
-       			out.print("<meta http-equiv=\"refresh\" content=\"1;url=./loginNormalUser.jsp\"> ");
+       			out.print("<meta http-equiv=\"refresh\" content=\"1;url=./lutadmin.jsp\"> ");
        			return;
    			}
 		%>

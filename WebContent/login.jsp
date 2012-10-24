@@ -5,10 +5,6 @@
 <%@page import="java.math.*"%>
 <%@page import="enc.*"%>
 
-
-
-
-
 <% 
 String admin_username = request.getParameter("username");
 if(admin_username != null){
@@ -39,6 +35,36 @@ else
 
 <c:set var="userDetails" value="${admin_users.rows[0]}" />
 
+<script type="text/javascript">
+<!--
+var countryNames = new Array();
+
+<c:forEach var="row" items="${country.rowsByIndex}">
+	<c:forEach var="column" items="${row}">
+    	countryNames.push(value="${column}");
+	</c:forEach>
+</c:forEach>
+
+function validate_form ( )
+{
+	valid = false;
+	for(var i=0; i< countryNames.length; i++){
+		if ( countryNames[i] == document.form_country.country.value )
+		{
+	        valid = true;
+	        return valid;
+	    }
+	}
+	if(valid = false){
+		alert( "Please stop tampering with the web parameters." );
+	}
+	
+    return valid;
+}
+
+//-->
+</script>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -52,7 +78,6 @@ else
    				
 		%>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
 <link rel="stylesheet" type="text/css" href="lutstyle.css">
 <title>LUT Admin pages</title>
 </head>
@@ -60,6 +85,7 @@ else
 	<c:choose>
 		<c:when test="${ empty userDetails }">
                 Login failed, check your username or password!
+                <meta http-equiv="Refresh" content="3; url=lutadmin.jsp">
             </c:when>
             <c:otherwise>
                 <h1>Login succeeded. Welcome <%=admin_username%>!</h1>  
@@ -74,8 +100,7 @@ else
                     		<td>Please select a user below to edit or delete:</td>
                 		</tr>
                 		<tr>
-                    		<td><form name="form_users" action="userdata.jsp"
-                    			onSubmit="return validate_form()">
+                    		<td><form name="form_users" action="userdata.jsp" onSubmit="">
                             	<strong>Select a user:</strong>
                             	<select name= <c:out value="normal_users"/>>
                                 	<c:forEach var="row" items="${normal_users.rowsByIndex}">
