@@ -3,6 +3,40 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ page language="java" import="captchas.CaptchasDotNet" %>
 
+<% 
+String username;
+if (request.getParameter("name").length() > 20)
+{
+	username = request.getParameter("name").substring(0, 20).replace('<', ' ').replace('>', ' ');
+}
+else
+{
+	username = request.getParameter("name").replace('<', ' ').replace('>', ' ');
+}
+
+%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+    <head>
+    <% Object sUsername = session.getAttribute("Username");
+   			if(sUsername == null){
+       			out.print("<meta http-equiv=\"refresh\" content=\"1;url=./loginNormalUser.jsp\"> ");
+       			return;
+   			}
+		%>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta http-equiv="refresh" content="5;url=index.jsp"> 
+        <link rel="stylesheet" type="text/css" href="lutstyle.css">
+        <title>Review added NOW2!</title>
+    </head>
+    <body>
+        <h1>Thanks <%=username%>!</h1>
+        Your contribution is appreciated.<br>
+        You will be redirected to the LUT2.0 main page in a few seconds.
+    </tr>
+</body>
+</html>
 <%
 boolean captchaGood = false;
 CaptchasDotNet captchas = new captchas.CaptchasDotNet(
@@ -46,18 +80,7 @@ if(captchaGood == false)
 }
  %>
 
-<% 
-String username;
-if (request.getParameter("name").length() > 20)
-{
-	username = request.getParameter("name").substring(0, 20).replace('<', ' ').replace('>', ' ');
-}
-else
-{
-	username = request.getParameter("name").replace('<', ' ').replace('>', ' ');
-}
 
-%>
 
 <sql:transaction dataSource="jdbc/lut2">
     <sql:update var="count">
@@ -68,25 +91,3 @@ else
     </sql:update>
 </sql:transaction>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-    <head>
-    <% Object sUsername = session.getAttribute("Username");
-   			if(sUsername == null){
-       			out.print("<meta http-equiv=\"refresh\" content=\"1;url=./loginNormalUser.jsp\"> ");
-       			return;
-   			}
-		%>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <meta http-equiv="refresh" content="5;url=index.jsp"> 
-        <link rel="stylesheet" type="text/css" href="lutstyle.css">
-        <title>Review added NOW2!</title>
-    </head>
-    <body>
-        <h1>Thanks <%=username%>!</h1>
-        Your contribution is appreciated.<br>
-        You will be redirected to the LUT2.0 main page in a few seconds.
-    </tr>
-</body>
-</html>
