@@ -68,7 +68,7 @@ CaptchasDotNet captchas = new captchas.CaptchasDotNet(
                             <br><br>
                             <%= captchas.image() %><br>
            					<a href="<%= captchas.audioUrl() %>">Phonetic spelling (mp3)</a><br />
-                            Message: <input type="text" name="name" />
+                            Message: <input type="text" name="password" />
                             <br><br>
                             <input type="submit" value="Add review" />
                         </form>
