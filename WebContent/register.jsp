@@ -38,7 +38,7 @@ public boolean validatePasswordContent(String password){
 public boolean validatePassword(String password){
 	return validatePasswordLength(password) && validatePasswordContent(password);
 }
-public boolean validate(String username, String password, String email){
+public boolean validate(String username, String password, String email,String output){
 	return validateEmail(email) && validateUsername(username) && validatePassword(password);
 }
 public String sendVerificationMail (String to, String token)
@@ -58,8 +58,7 @@ public String sendVerificationMail (String to, String token)
 	  }
 	  catch (IOException e){	
 		
-	     output = "Error while sending new password, contact support";
-	     output = e.toString();
+	     output = "Error while sending verification mail, contact support";
 	  }
 	 return output;
 }
@@ -82,10 +81,6 @@ public String sendVerificationMail (String to, String token)
     <body>
         <h1>Hi student!</h1>
         <table border="0">
-        	<%
-					pageContext.setAttribute("r",false);//captchas.check(request.getParameter("captcha")) != 't');
-											
-					%>
                <c:choose>
 					<c:when test="${ ! empty param.token}">
 						<c:choose>
@@ -99,6 +94,7 @@ public String sendVerificationMail (String to, String token)
 										</thead>
 									</c:when>
 									<c:otherwise>
+								
 										<thead>
 											<tr><th>
 											Registration successful!
@@ -115,6 +111,7 @@ public String sendVerificationMail (String to, String token)
 										<c:remove var="username" scope="session"/>
 										<c:remove var="password" scope="session"/>
 										<c:remove var="email" scope="session"/>
+										
 									</c:otherwise>
 								</c:choose>
 							</c:when>
@@ -139,7 +136,11 @@ public String sendVerificationMail (String to, String token)
 						</c:choose>
 					</c:when>
 				
-					<c:when test="${empty param.username or empty param.password or empty param.email or r }">
+					<c:when test="${empty param.username or empty param.password or empty param.email}">
+							<c:remove var="username"/>
+							<c:remove var="password"/>
+							<c:remove var="email"/>
+							<c:remove var="token"/>
 							<form method="post" action="register.jsp">
 									<thead>
 										<tr><th colspan="2"><h2>Please register</h2></th></tr>
@@ -172,27 +173,62 @@ public String sendVerificationMail (String to, String token)
 								<c:set var="username" scope="session" value="${param.username }"/>
 								<c:set var="password" scope="session" value="${param.password }"/>
 								<c:set var="email" scope="session" value="${param.email }"/>
-								
-								<thead><tr><th>
-								<%
-									SecureRandom r = new SecureRandom();
-									String token = new BigInteger(32, r).toString(40);
-									out.print(sendVerificationMail(request.getParameter("email"),token));
-									session.setAttribute("token", token);
-									session.setAttribute("password",(String)MD5.hash((String)session.getAttribute("password")));
-								%>	
-		
-								</th></tr></thead>
-								<form method="post" action="register.jsp">
-									<tbody>
-										<tr>
-										<td>Verification code:</td>
-										<td><input type="text" name="token"/></td>
-										</tr><tr>
-										<td colspan="2"><input type="submit" value="Verify"/></td>
-										</tr>
-									</tbody>
-								</form>uii
+								<sql:transaction dataSource="jdbc/lut2">
+							    	<sql:query var="user_exists">
+							        	SELECT * FROM normal_users WHERE uname = ? OR email = ?;
+							        	<sql:param value="${username}" />
+							        	<sql:param value="${email}" />
+							    	</sql:query>
+								</sql:transaction>
+								<c:set var="user_exists_res" value="${user_exists.rows[0]}"/>
+					            <c:choose>
+						            
+						            <c:when test="${ empty user_exists_res }">
+						                <thead>Either your username or email is in use</thead>
+						            </c:when>
+							
+									<c:otherwise>							
+										
+										<%
+											String output = "";
+											boolean validate = validate((String)session.getAttribute("username"),(String)session.getAttribute("password"),(String)session.getAttribute("email"),output);
+											pageContext.setAttribute("validated",validate);
+										
+										%>
+										<c:choose>
+											<c:when test="${!validated}">
+											
+												<thead>There was an error in your input</thead>
+												<tbody>
+													<%=output%>
+												</tbody>
+											</c:when>
+											<c:otherwise>
+										
+												<thead><tr><th>
+												<%
+													SecureRandom r = new SecureRandom();
+													String token = new BigInteger(32, r).toString(40);
+													out.print(sendVerificationMail(request.getParameter("email"),token));
+													session.setAttribute("token", token);
+													session.setAttribute("password",(String)MD5.hash((String)session.getAttribute("password")));
+												%>	
+						
+												</th></tr></thead>
+												<form method="post" action="register.jsp">
+													<tbody>
+														<tr>
+														<td>Verification code:</td>
+														<td><input type="text" name="token"/></td>
+														</tr><tr>
+														<td colspan="2"><input type="submit" value="Verify"/></td>
+														</tr>
+													</tbody>
+												</form>
+											</c:otherwise>
+										</c:choose>
+									</c:otherwise>
+								</c:choose>
 							</c:otherwise>
 						</c:choose>
 					</c:otherwise>
