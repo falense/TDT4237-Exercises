@@ -15,6 +15,48 @@ else
 }
 
 %>
+<%
+boolean captchaGood = false;
+CaptchasDotNet captchas = new captchas.CaptchasDotNet(
+   request.getSession(true),     // Ensure session
+  "progsikgr7",                       // client
+  "NY0lOO3AAiKZpv1U8cSjEageoQSJoxioVUYOro1e"                      // secret
+  );
+String password;
+if(request.getParameter("password") == null)
+{ 
+	password = " "; 
+}
+else
+{
+	password = request.getParameter("password");
+}
+String body;
+switch (captchas.check(password)) {
+   case 's':
+     body = "Session seems to be timed out or broken. ";
+     body += "Please try again or report error to administrator.";
+     break;
+   case 'm':
+     body = "Every CAPTCHA can only be used once. ";
+     body += "The current CAPTCHA has already been used. ";
+     body += "Please use back button and reload";
+     break;
+   case 'w':
+     body = "You entered the wrong password. ";
+     body += "Please use back button and try again. ";
+     break;
+   default:
+     body = "";
+	 captchaGood = true;
+     break;
+ }
+if(captchaGood == false)
+{
+	out.print(body);
+	return;
+}
+ %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
