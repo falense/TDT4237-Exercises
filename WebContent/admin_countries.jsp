@@ -16,7 +16,7 @@
 <head>
     	<% Object username = session.getAttribute("AdminUsername");
    			if(username == null){
-       			out.print("<meta http-equiv=\"refresh\" content=\"1;url=./loginNormalUser.jsp\"> ");
+       			out.print("<meta http-equiv=\"refresh\" content=\"1;url=./lutadmin.jsp\"> ");
        			return;
    			}
 		%>
@@ -60,5 +60,7 @@
 			</form>
 		</td>
 	</tr>
+	<br /><a href="lutadmin.jsp">Back to Manage Users</a>
+	<br /><a href="admin_unis.jsp">Back to Manage Schools</a>
 </body>
 </html>

@@ -241,13 +241,15 @@ public class CaptchasDotNet {
       index = (digest[i]+256)%256%alphabet.length();
       correctPassword += alphabet.substring(index, index+1);
     }
+
+    httpSess.setAttribute("captchasDotNetRandom", "used");
     // Check if password is correct
     if (!password.equals(correctPassword)) {
       // 'w'rong Password
       return 'w';
     } else {
       // invalidate used captcha random
-      httpSess.setAttribute("captchasDotNetRandom", "used");
+     // httpSess.setAttribute("captchasDotNetRandom", "used");
       // 't'rue
       return 't';
     }
